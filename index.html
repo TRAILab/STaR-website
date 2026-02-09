@@ -221,10 +221,10 @@
       
       <div class="has-text-centered" style="margin-top: 1em;">
           <!-- <embed src="./static/images/JDT3D_Architecture_v6.pdf" style="width: 80%; height: 500px;" alt="JDT3D Architecture"> -->
-            <img src="./static/images/Framework2.jpg" style="width: 95%;" alt="OpenNav Architecture">
+            <img src="./static/images/F1.jpg" style="width: 95%;" alt="OpenNav Architecture">
         </div>
           <h2 class="subtitle" style="text-align: justify;">
-         Overview of <strong>OpenNav.</strong> Given the posed RGB-Lidar observation of the environment and an open-set free-form language instruction, 1) we leverages task-agnostic prompts to enable zero-shot generalization and adaptability to varied instructions; 2) MLLM generates code, which interacts with OVPS, to produce open-set multimodal scene perception outputs, and 2D bird-eye-view (BEV) value map (consists of a semantic map and occupancy map) grounded in the operation environment. 3) MLLM synthesizes a human-like coarse trajectory based on instructions, scene understanding, and its reasoning capabilities. The generated BEV value map then serves as the objective function for the motion planner, which refines the trajectory to ensure geometry-compliant navigation. Please see the next Figure for detailed pipeline, inputs, and outputs of the OVPS.
+         <strong>STaR System Overview</strong>. Our framework consists of three stages. (Left) Memory construction: the robot records RGB and posed depth data to build a multimodal memory composed of three complementary databases (DB) -- video caption, 3D primitive, and visual keyframe -- jointly forming OmniMem. (Middle) User query and reasoning: given text or multimodal queries, an agentic planner (MLLM) retrieves task-relevant memories through an Information Bottleneck, performs contextual reasoning, and outputs structured answers (location, time, or description). (Right) Evaluation: We evaluate STaR on both the NaVQA dataset (campus) and the WH-VQA dataset (warehouse), which cover spatial, temporal, and descriptive question types across short-, medium-, and long-term memory settings. The evaluation examines three key capabilities-long horizon cross-modal memory construction, task-conditioned memory retrieval, and contextual reasoning. We also validate the multi-modal query and navigation tasks in a warehouse simulated with Isaac Sim.
         </h2>
       </div>
     </div>
@@ -235,10 +235,21 @@
       <div class="hero-body">
         <div class="has-text-centered">
           <!-- <embed src="./static/images/JDT3D_Architecture_v6.pdf" style="width: 80%; height: 500px;" alt="JDT3D Architecture"> -->
-            <img src="./static/images/Perception.jpg" style="width: 95%;" alt="OVPS Architecture">
+            <img src="./static/images/F2.jpg" style="width: 95%;" alt="OVPS Architecture">
         </div>
         <h2 class="subtitle" style="text-align: justify;">
-          Overview of <span class="dnerf"> Open Vocabulary Perception System (OVPS).</span> OVPS sequentially performs detection, segmentation, and object caption generation. Combined with 3D point clouds, the system will generate 1) multimodal observations for VLN, including text prompts and image prompts for MLLMs, 2) 3D reconstructed map, as well as 2D occupancy and semantic maps for trajectory refinement.
+            <strong>Task-conditioned retrieval and contextual reasoning.</strong>
+            Given an open-ended user query, STaR embeds task cues and queries the memory
+            database to retrieve relevant video captions with timestamps and associated
+            detected objects (caption-induced primitives). These retrieved cues define a
+            task-specific working set of 3D primitives, over which STaR applies an
+            Information Bottleneck–based clustering to merge neighboring primitives into
+            compact, task-relevant groups. Captions are then grouped by cluster, and a
+            single representative caption is selected from each group to form a
+            non-redundant evidence set. When necessary, the robot further loads keyframe
+            images to resolve fine-grained visual details, enabling contextual reasoning
+            and the generation of actionable outputs, such as object locations, shelf
+            indices, and navigation targets for downstream tasks.
         </h2>
       </div>
     </div>
